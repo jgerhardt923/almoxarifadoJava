@@ -11,25 +11,39 @@ public class Usuario {
         this.connection = connection;
     }
 
-    public String stringFromHashMap(HashMap<String, Object> hashMap, String separetor, String mode) {
+    /**
+     * retorna uma string com os dados do <b>hashMap</b>
+     * @param hashMap
+     * HashMap contendo os dados
+     * @param separator
+     * String para separar os dados
+     * @param mode
+     * <p>string representando o modo como a string sera retornada, pode ser:</p>
+     * <p><b>k</b> | <b>key</b> para retornar apenas as chaves do hashMap</p>
+     * <p><b>v</b> | <b>value</b> para retornar apenas os valores do hashMap</p>
+     * <p><b>k=v</b> | <b>key=value</b> para retornar os pares <b>chave=valor</b> do hashMap</p>
+     * @return
+     * <b>String</b> ou <b>null</b>
+     */
+    public String stringFromHashMap(HashMap<String, Object> hashMap, String separator, String mode) {
         String string = "";
         if (mode == "k" | mode == "key") {
             for (String keyString : hashMap.keySet()) {
-                string += keyString +" "+ separetor + " ";
+                string += keyString +" "+ separator + " ";
             }
-            return string.substring(0, (-1 * separetor.length())-1);
+            return string.substring(0, (-1 * separator.length())-1);
         }
         if (mode == "v" | mode == "value") {
             for (String keyString : hashMap.keySet()) {
-                string += "'" + String.valueOf(hashMap.get(keyString)) +"' "+ separetor + " ";
+                string += "'" + String.valueOf(hashMap.get(keyString)) +"' "+ separator + " ";
             }
-            return string.substring(0, (-1 * separetor.length())-1);
+            return string.substring(0, (-1 * separator.length())-1);
         }
         if (mode == "k=v" | mode == "key=value") {
             for (String keyString : hashMap.keySet()) {
-                string += keyString + "='" + String.valueOf(hashMap.get(keyString)) +"' "+ separetor + " ";
+                string += keyString + "='" + String.valueOf(hashMap.get(keyString)) +"' "+ separator + " ";
             }
-            return string.substring(0, (-1 * separetor.length())-1);
+            return string.substring(0, (-1 * separator.length())-1);
         }
         return null;
     }
