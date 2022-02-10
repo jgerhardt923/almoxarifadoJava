@@ -9,9 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Model {
-    String tableName;
-    List<String> fields;
-    Connection connection;
+    protected String tableName;
+    protected List<String> fields;
+    protected Connection connection;
+
+    public String getTableName() {
+        return this.tableName;
+    }
+
+    public List<String> getFields() {
+        return this.fields;
+    }
 
     /**
      * retorna uma string com os dados do <b>hashMap</b>
