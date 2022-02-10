@@ -104,14 +104,119 @@ public class Almoxarifado{
         return console.readLine(": ");
     }
 
+    private static void newUsuario() {
+        try {
+            console.format("novo usuario\n");
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("nome", console.readLine("nome: "));
+            data.put("senha", console.readLine("senha: "));
+            usuario.create(data);
+            console.format(data.get("nome")+" cadastrado!\n");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void listUsuario() {
+        console.format("usuarios\n");
+        System.out.println(usuario.getAll());
+    }
+
+    private static void updateUsuario() {
+        console.format("atualizar usuario\n");
+        try {
+            HashMap<String, Object> usr;
+            String id;
+            while (true) {
+                id = console.readLine("id:");
+                HashMap<String, Object> filter = new HashMap<>();
+                filter.put("id", id);
+                usr = usuario.getOne(filter);
+
+                System.out.println(usr);
+                if (console.readLine("usuario correto?(s/n) ").equals("s")) break;   
+            }
+            HashMap<String, Object> data = new HashMap<>();
+            for (String key : usr.keySet()) {
+                String value = console.readLine(key+" ("+usr.get(key)+"):(enter para nao alterar) ");
+                if (value.equals("")) {
+                    data.put(key, usr.get(key));
+                } else {
+                    data.put(key, value);
+                }
+            }
+            usuario.update(Integer.parseInt(id), data);
+            console.format(data.get("nome")+" atualizado!\n");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    private static void deleteUsuario() {
+        console.format("excluir usuario\n");
+        try {
+            HashMap<String, Object> usr;
+            String id;
+            while (true) {
+                id = console.readLine("id:");
+                HashMap<String, Object> filter = new HashMap<>();
+                filter.put("id", id);
+                usr = usuario.getOne(filter);
+                System.out.println(usr);
+                if (console.readLine("usuario correto?(s/n) ").equals("s")) break;   
+            }
+            String opt = console.readLine("realmente deseja excluir este usuario?(s/n)");
+            if (opt.equals("s")) usuario.delete(Integer.valueOf(id));
+            console.format(usr.get("nome")+" excluido!\n");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void newCategoria() {
+        
+    }
+
+    private static void listCategoria() {
+        
+    }
+
+    private static void updateCategoria() {
+        
+    }
+    
+    private static void deleteCategoria() {
+        
+    }
+
+    private static void newObjeto() {
+        
+    }
+
+    private static void listObjeto() {
+        
+    }
+
+    private static void updateObjeto() {
+        
+    }
+    
+    private static void deleteObjeto() {
+        
+    }
+
     private static boolean processOption(String option) {
         if (option.equals("11")) {
+            newUsuario();
             return true;
         } else if (option.equals("12")) {
+            listUsuario();
             return true;
         } else if (option.equals("13")) {
+            updateUsuario();
             return true;
         } else if (option.equals("14")) {
+            deleteUsuario();
             return true;
         } else if (option.equals("21")) {
             return true;
@@ -138,6 +243,7 @@ public class Almoxarifado{
         } else if (option.equals("52")) {
             return true;
         } else if (option.equals("61")) {
+            printMenuOptions();
             return true;
         } else if (option.equals("62")) {
             return false;

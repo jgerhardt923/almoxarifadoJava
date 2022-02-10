@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     senha TEXT NOT NULL,
-    adm BOOLEAN NOT NULL
+    adm BOOLEAN DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS Categoria (
@@ -30,4 +30,4 @@ CREATE TABLE IF NOT EXISTS Movimentacao (
     FOREIGN KEY(usuario_id) REFERENCES Usuario (Id) ON DELETE RESTRICT
 );
 
-INSERT INTO Usuario (nome, senha, adm) VALUES ('admin', 'admin123', 1);
+INSERT INTO Usuario (nome, senha, adm) VALUES ('admin', 'admin123', true);
