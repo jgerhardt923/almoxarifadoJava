@@ -6,9 +6,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Model {
     String tableName;
+    List<String> fields;
     Connection connection;
 
     /**
