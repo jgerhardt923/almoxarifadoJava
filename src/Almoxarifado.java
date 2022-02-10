@@ -8,6 +8,7 @@ import src.models.Categoria;
 import src.models.Movimentacao;
 import src.models.Objeto;
 import src.models.Usuario;
+import src.views.View;
 
 public class Almoxarifado{
     private static Connection connection;
@@ -18,6 +19,10 @@ public class Almoxarifado{
     private static Categoria categoria;
     private static Objeto objeto;
     private static Movimentacao movimentacao;
+
+    private static View usuarioView;
+    private static View categoriaView;
+    private static View objetoView;
 
     private static HashMap usuarioLogado = null;
 
@@ -32,6 +37,10 @@ public class Almoxarifado{
             categoria = new Categoria(connection);
             objeto = new Objeto(connection);
             movimentacao = new Movimentacao(connection);
+
+            usuarioView = new View(usuario, console);
+            categoriaView = new View(categoria, console);
+            objetoView = new View(objeto, console);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -91,10 +100,12 @@ public class Almoxarifado{
         console.printf("    Movimentacoes\n");
         console.printf("        |__  Entradas\n");
         console.printf("        |       |__  novo_______[41]\n");
-        console.printf("        |       |__  excluir____[42]\n\n");
+        console.printf("        |       |__  listar_____[42]\n");
+        console.printf("        |       |__  excluir____[43]\n\n");
         console.printf("        |__  Saidas\n");
         console.printf("                |__  novo_______[51]\n");
-        console.printf("                |__  excluir____[52]\n\n\n");
+        console.printf("        |       |__  listar_____[52]\n");
+        console.printf("                |__  excluir____[53]\n\n\n");
         console.printf("    Opcoes\n");
         console.printf("        |__  mostrar menu_______[61]\n");
         console.printf("        |__  sair_______________[62]\n");
@@ -104,143 +115,54 @@ public class Almoxarifado{
         return console.readLine(": ");
     }
 
-    private static void newUsuario() {
-        try {
-            console.format("novo usuario\n");
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("nome", console.readLine("nome: "));
-            data.put("senha", console.readLine("senha: "));
-            usuario.create(data);
-            console.format(data.get("nome")+" cadastrado!\n");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void listUsuario() {
-        console.format("usuarios\n");
-        System.out.println(usuario.getAll());
-    }
-
-    private static void updateUsuario() {
-        console.format("atualizar usuario\n");
-        try {
-            HashMap<String, Object> usr;
-            String id;
-            while (true) {
-                id = console.readLine("id:");
-                HashMap<String, Object> filter = new HashMap<>();
-                filter.put("id", id);
-                usr = usuario.getOne(filter);
-
-                System.out.println(usr);
-                if (console.readLine("usuario correto?(s/n) ").equals("s")) break;   
-            }
-            HashMap<String, Object> data = new HashMap<>();
-            for (String key : usr.keySet()) {
-                String value = console.readLine(key+" ("+usr.get(key)+"):(enter para nao alterar) ");
-                if (value.equals("")) {
-                    data.put(key, usr.get(key));
-                } else {
-                    data.put(key, value);
-                }
-            }
-            usuario.update(Integer.parseInt(id), data);
-            console.format(data.get("nome")+" atualizado!\n");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    
-    private static void deleteUsuario() {
-        console.format("excluir usuario\n");
-        try {
-            HashMap<String, Object> usr;
-            String id;
-            while (true) {
-                id = console.readLine("id:");
-                HashMap<String, Object> filter = new HashMap<>();
-                filter.put("id", id);
-                usr = usuario.getOne(filter);
-                System.out.println(usr);
-                if (console.readLine("usuario correto?(s/n) ").equals("s")) break;   
-            }
-            String opt = console.readLine("realmente deseja excluir este usuario?(s/n)");
-            if (opt.equals("s")) usuario.delete(Integer.valueOf(id));
-            console.format(usr.get("nome")+" excluido!\n");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void newCategoria() {
-        
-    }
-
-    private static void listCategoria() {
-        
-    }
-
-    private static void updateCategoria() {
-        
-    }
-    
-    private static void deleteCategoria() {
-        
-    }
-
-    private static void newObjeto() {
-        
-    }
-
-    private static void listObjeto() {
-        
-    }
-
-    private static void updateObjeto() {
-        
-    }
-    
-    private static void deleteObjeto() {
-        
-    }
-
     private static boolean processOption(String option) {
         if (option.equals("11")) {
-            newUsuario();
+            usuarioView.create();
             return true;
         } else if (option.equals("12")) {
-            listUsuario();
+            usuarioView.list();
             return true;
         } else if (option.equals("13")) {
-            updateUsuario();
+            usuarioView.update();
             return true;
         } else if (option.equals("14")) {
-            deleteUsuario();
+            usuarioView.delete();
             return true;
         } else if (option.equals("21")) {
+            categoriaView.create();
             return true;
         } else if (option.equals("22")) {
+            categoriaView.list();
             return true;
         } else if (option.equals("23")) {
+            categoriaView.update();
             return true;
         } else if (option.equals("24")) {
+            categoriaView.delete();
             return true;
         } else if (option.equals("31")) {
+            objetoView.create();
             return true;
         } else if (option.equals("32")) {
+            objetoView.list();
             return true;
         } else if (option.equals("33")) {
+            objetoView.update();
             return true;
         } else if (option.equals("34")) {
+            objetoView.delete();
             return true;
         } else if (option.equals("41")) {
             return true;
         } else if (option.equals("42")) {
             return true;
+        } else if (option.equals("43")) {
+            return true;
         } else if (option.equals("51")) {
             return true;
         } else if (option.equals("52")) {
+            return true;
+        } else if (option.equals("53")) {
             return true;
         } else if (option.equals("61")) {
             printMenuOptions();
